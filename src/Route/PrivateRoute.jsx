@@ -16,7 +16,6 @@ const PrivateRoute = ({ children }) => {
           {},
           { withCredentials: true }
         );
-        console.log(res.data);
         setUser(res.data.user);
       } catch {
         setUser(null);

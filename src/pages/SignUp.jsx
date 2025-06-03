@@ -3,9 +3,11 @@ import { useFieldArray, useForm } from "react-hook-form";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useState } from "react";
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,6 +25,7 @@ const SignUp = () => {
   const handleSignUp = (data) => {
     const shopsArray = data.shops.map((shop) => shop.value);
     const finalData = { ...data, shops: shopsArray };
+    setLoading(true)
     axiosPublic.post("users", finalData).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
@@ -42,7 +45,7 @@ const SignUp = () => {
         });
       }
     });
-    console.log(finalData);
+    setLoading(false)
   };
   return (
     <div className="py-12">
@@ -161,7 +164,7 @@ const SignUp = () => {
               </button>
             )}
           </div>
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit"> {loading ? <FadeLoader color="rgba(255, 255, 255, 1)" /> : 'Sign Up'}</Button>
         </form>
       </div>
     </div>
