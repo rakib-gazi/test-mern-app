@@ -5,6 +5,21 @@ import SignIn from "../pages/SignIn";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import Shops from "../pages/Shops";
+const subdomain = () => {
+  const hostname = window.location.hostname;
+  const parts = hostname.split(".");
+
+  if (hostname.includes("localhost")) {
+    const domainInfo = {
+      subDomain: parts[0],
+      isSubDomain: true,
+    };
+    return domainInfo;
+  } else {
+    return parts.length > 2 ? parts[0] : null;
+  }
+};
+console.log(subdomain());
 
 const router = createBrowserRouter([
   {
@@ -14,23 +29,31 @@ const router = createBrowserRouter([
     children: [
       {
         path: "*",
-        element:<PrivateRoute><Shops/></PrivateRoute> , 
+        element: (
+          <PrivateRoute>
+            <Shops />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/",
-        element: <SignUp/>,
+        element: <SignUp />,
       },
       {
         path: "/signup",
-        element:<SignUp/> ,
+        element: <SignUp />,
       },
-     {
+      {
         path: "/signin",
-        element: <SignIn/>,
+        element: <SignIn />,
       },
-     {
+      {
         path: "/dashboard",
-        element: <PrivateRoute><Dashboard/></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
     ],
   },

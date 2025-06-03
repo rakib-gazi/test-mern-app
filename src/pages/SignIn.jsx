@@ -4,11 +4,14 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import { useState } from "react";
+import { FadeLoader } from "react-spinners";
 const SignIn = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const location = useLocation();
   const {setUser} = useAuth();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,9 +21,11 @@ const SignIn = () => {
 
   const handleSignUp = async (data) => {
     try {
+      setLoading(true);
       const res = await axiosPublic.post("/auth/signin", data, {
         withCredentials: true,
       });
+      setLoading(false);
       if (res.data.success) {
         setUser(res.data.user);
         Swal.fire({
@@ -33,6 +38,7 @@ const SignIn = () => {
         navigate(location.state?.pathname || "/dashboard");
       }
     } catch (err) {
+      setLoading(false);
       const { field, message } = err.response.data;
 
       if (field) {
@@ -134,7 +140,11 @@ const SignIn = () => {
               Remember Me
             </Label>
           </div>
-          <Button type="submit">Sign In</Button>
+          <Button type="submit">{loading ? (
+              <FadeLoader color="#ffffff" height={10} width={5}  className="py-2"/>
+            ) : (
+              "Sign In"
+            )}</Button>
         </form>
       </div>
     </div>

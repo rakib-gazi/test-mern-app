@@ -1,24 +1,23 @@
-
+import { RiseLoader } from "react-spinners";
+import useAuth from "../hooks/useAuth";
+import useSubDomain from "../hooks/useSubDomain";
 
 const Shops = () => {
-   const getSubdomain = () => {
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length === 2 && parts[1] === 'localhost') {
-      return parts[0];
-    }
-    return null;
-  };
-
-  const shopDashboard = getSubdomain();
-
-
-
+  const subDomain = useSubDomain();
+  console.log(subDomain);
+  const { loading } = useAuth();
+  if (loading) {
     return (
-        <div style={{ padding: '2rem', textAlign: 'center', fontWeight: '600', fontSize: '1.25rem' }}>
-            This is {shopDashboard} shop
-        </div>
+      <div className="flex justify-center items-center py-12">
+        <RiseLoader color="#0debd7" className="py-12" />
+      </div>
     );
+  }
+  return (
+    <div className="text-center mt-10 text-xl font-semibold">
+      This is <span className="text-blue-600">{subDomain}</span> shop
+    </div>
+  );
 };
 
 export default Shops;

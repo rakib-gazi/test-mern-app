@@ -4,6 +4,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { FadeLoader } from "react-spinners";
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
@@ -25,8 +26,9 @@ const SignUp = () => {
   const handleSignUp = (data) => {
     const shopsArray = data.shops.map((shop) => shop.value);
     const finalData = { ...data, shops: shopsArray };
-    setLoading(true)
+    setLoading(true);
     axiosPublic.post("users", finalData).then((res) => {
+      setLoading(false)
       if (res.data.insertedId) {
         Swal.fire({
           position: "center",
@@ -45,7 +47,7 @@ const SignUp = () => {
         });
       }
     });
-    setLoading(false)
+    
   };
   return (
     <div className="py-12">
@@ -164,7 +166,14 @@ const SignUp = () => {
               </button>
             )}
           </div>
-          <Button type="submit"> {loading ? <FadeLoader color="rgba(255, 255, 255, 1)" /> : 'Sign Up'}</Button>
+          <Button type="submit">
+            {" "}
+            {loading ? (
+              <FadeLoader color="#ffffff" height={10} width={5}  className="py-2"/>
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
         </form>
       </div>
     </div>

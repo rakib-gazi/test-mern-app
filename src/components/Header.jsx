@@ -36,7 +36,6 @@ const Header = () => {
       {user ? (
         <div className="flex md:order-2 cursor-pointer">
           <Dropdown
-
             className="dark:bg-white "
             arrowIcon={false}
             inline
@@ -53,30 +52,44 @@ const Header = () => {
               const shopName = s.trim();
               const safeShopName = shopName
                 .toLowerCase()
-                .replace(/\s+/g, '-')      
-                .replace(/[^a-z0-9-]/g, '');
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9-]/g, "");
               return (
-                <DropdownItem key={index} className="text-start dark:text-black">
-                  <a href={`${protocol}//${safeShopName}.localhost:5173`} className="block w-full">
-                    {shopName}
-                  </a>
+                <DropdownItem
+                  key={index}
+                  onClick={() =>
+                    (window.location.href = `${protocol}//${safeShopName}.localhost:5173`)
+                  }
+                  className="text-start dark:text-black"
+                >
+                  {shopName}
                 </DropdownItem>
               );
             })}
             <DropdownDivider />
-            <DropdownItem onClick={handleSignOut} className="dark:text-black">Sign out</DropdownItem>
+            <DropdownItem onClick={handleSignOut} className="dark:text-black">
+              Sign out
+            </DropdownItem>
           </Dropdown>
         </div>
       ) : null}
 
       <NavbarCollapse className="text-black font-bold">
         {!user && (
-
           <>
-            <Link to='/signin' className="bg-gray-200 px-4 py-1 rounded hover:bg-blue-600 hover:text-white tansition duration-300">Signin</Link>
-            <Link to='/signup' className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-800 hover:text-white tansition duration-300">Signup</Link>
+            <Link
+              to="/signin"
+              className="bg-gray-200 px-4 py-1 rounded hover:bg-blue-600 hover:text-white tansition duration-300"
+            >
+              Signin
+            </Link>
+            <Link
+              to="/signup"
+              className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-800 hover:text-white tansition duration-300"
+            >
+              Signup
+            </Link>
           </>
-
         )}
       </NavbarCollapse>
     </Navbar>

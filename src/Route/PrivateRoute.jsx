@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { RiseLoader } from "react-spinners";
 
 const PrivateRoute = ({ children }) => {
   const { user, setUser, loading, setLoading } = useAuth();
@@ -30,7 +31,7 @@ const PrivateRoute = ({ children }) => {
     }
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="flex justify-center items-center py-12"><RiseLoader color="#0debd7"  className="py-12"/></div>;
   if (!user) {
     return <Navigate state={location.pathname} to={"/signin"}></Navigate>;
   }
