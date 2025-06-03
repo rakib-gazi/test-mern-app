@@ -12,9 +12,10 @@ import {
 } from "flowbite-react";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const protocol = window.location.protocol;
   const { user, setUser } = useAuth();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
@@ -23,54 +24,59 @@ const Header = () => {
     setUser(null);
     navigate("/signin");
   };
-  
+
   return (
-    <Navbar fluid rounded>
+    <Navbar className="bg-white text-black dark:bg-white shadow-md sticky top-0 z-50 ">
       <NavbarBrand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold">
-          Mern App
+          Shop Hub
         </span>
       </NavbarBrand>
 
       {user ? (
         <div className="flex md:order-2 cursor-pointer">
           <Dropdown
-          className=""
+
+            className="dark:bg-white "
             arrowIcon={false}
             inline
             label={
               <Avatar
-              className="cursor-pointer"
+                className="cursor-pointer"
                 alt="User settings"
                 img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                 rounded
               />
             }
           >
-            {user.shops.map((s, index) => (
-              <DropdownItem key={index}>
-                <a href={`http://${s}.localhost:5173`} className="block w-full">
-      {s}
-    </a>
+            {user.shops.map((s, index) => {
+              const shopName = s.trim();
+              const safeShopName = shopName
+                .toLowerCase()
+                .replace(/\s+/g, '-')      
+                .replace(/[^a-z0-9-]/g, '');
+              return (
+                <DropdownItem key={index} className="text-start dark:text-black">
+                  <a href={`${protocol}//${safeShopName}.localhost:5173`} className="block w-full">
+                    {shopName}
+                  </a>
                 </DropdownItem>
-            ))}
+              );
+            })}
             <DropdownDivider />
-            <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
+            <DropdownItem onClick={handleSignOut} className="dark:text-black">Sign out</DropdownItem>
           </Dropdown>
         </div>
       ) : null}
 
-      <NavbarCollapse>
+      <NavbarCollapse className="text-black font-bold">
         {!user && (
-          
-            <>
-            <NavbarLink href="/" active>
-              Home
-            </NavbarLink>
-            <NavbarLink href="/signin">Signin</NavbarLink>
-            <NavbarLink href="/signup">Signup</NavbarLink>
+
+          <>
+            <Link to='/signin' className="bg-gray-200 px-4 py-1 rounded hover:bg-blue-600 hover:text-white tansition duration-300">Signin</Link>
+            <Link to='/signup' className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-800 hover:text-white tansition duration-300">Signup</Link>
           </>
-          
+
         )}
       </NavbarCollapse>
     </Navbar>

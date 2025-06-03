@@ -6,4 +6,11 @@ import flowbiteReact from "flowbite-react/plugin/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), flowbiteReact()],
+  server: {
+    host: 'localhost', 
+    port: 5173,
+    strictPort: true,
+    cors: true,
+    origin: 'http://localhost:5173', 
+  }
 })

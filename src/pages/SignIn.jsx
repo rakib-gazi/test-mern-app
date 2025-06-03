@@ -130,7 +130,7 @@ const SignIn = () => {
           )}
           <div className="flex items-center gap-2">
             <Checkbox id="remember" {...register("remember")} />
-            <Label htmlFor="remember" className="flex">
+            <Label htmlFor="remember" className="flex dark:text-black">
               Remember Me
             </Label>
           </div>

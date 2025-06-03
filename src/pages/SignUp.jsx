@@ -60,6 +60,7 @@ const SignUp = () => {
             <TextInput
               id="username"
               type="text"
+              className="dark:bg-white"
               placeholder="John Doe"
               {...register("username", {
                 required: true,
