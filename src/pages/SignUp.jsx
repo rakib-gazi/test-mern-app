@@ -166,7 +166,7 @@ const SignUp = () => {
               </button>
             )}
           </div>
-          <Button type="submit">
+          <Button type="submit" className="cursor-pointer">
             {" "}
             {loading ? (
               <FadeLoader color="#ffffff" height={10} width={5}  className="py-2"/>

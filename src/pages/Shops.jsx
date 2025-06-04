@@ -4,7 +4,6 @@ import useSubDomain from "../hooks/useSubDomain";
 
 const Shops = () => {
   const subDomain = useSubDomain();
-  console.log(subDomain);
   const { loading } = useAuth();
   if (loading) {
     return (

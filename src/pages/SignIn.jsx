@@ -140,7 +140,7 @@ const SignIn = () => {
               Remember Me
             </Label>
           </div>
-          <Button type="submit">{loading ? (
+          <Button type="submit" className="cursor-pointer">{loading ? (
               <FadeLoader color="#ffffff" height={10} width={5}  className="py-2"/>
             ) : (
               "Sign In"
